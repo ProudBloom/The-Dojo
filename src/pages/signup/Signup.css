@@ -1,0 +1,30 @@
+.auth-form {
+   max-width: 360px;
+   margin: 60px auto;
+   border: 1px solid #ddd;
+   background: #fff;
+   min-width: 50%;
+}
+
+.auth-form h2 {
+   color: #fff;
+   background-color: var(--primary-color);
+   padding: 30px;
+   font-weight: bold;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.auth-form .auth-content {
+   padding: 15px 30px 30px 30px;
+   border: 5px solid var(--primary-color);
+}
+
+.auth-form .auth-content .btn {
+   width: 100%;
+}
+
+.auth-form .auth-content label span {
+   color: var(--heading-color);
+}
