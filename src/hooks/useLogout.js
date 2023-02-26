@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { projectAuth } from '../firebase/config';
+import { firestoreDatabase, projectAuth } from '../firebase/config';
 import { useAuthContext } from './useAuthContext';
 
 export const useLogout = () => {
@@ -15,6 +15,9 @@ export const useLogout = () => {
       }
 
       try {
+         //Update online status in document
+         await firestoreDatabase.collection('users').doc(user.uid).update({ online: false });
+
          await projectAuth.signOut();
 
          dispatch({ type: 'LOGOUT' });

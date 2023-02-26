@@ -1,0 +1,14 @@
+.avatar {
+   display: inline-block;
+   width: 60px;
+   height: 60px;
+   border: 4px solid #fff;
+   border-radius: 50%;
+   margin-bottom: 10px;
+   overflow: hidden;
+}
+
+.avatar img {
+   width: 100%;
+   height: 100%;
+}
