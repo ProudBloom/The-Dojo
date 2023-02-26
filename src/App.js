@@ -1,5 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { useAuthContext } from './hooks/useAuthContext';
 
 //styles
 import './App.css';
@@ -17,9 +18,11 @@ import Sidebar from './components/sidebar/Sidebar';
 import { AuthContextComponent } from './context/AuthContext';
 
 function App() {
+   const { user, isAuthReady } = useAuthContext();
+
    return (
-      <AuthContextComponent>
-         <div className='App'>
+      <div className='App'>
+         {isAuthReady && (
             <BrowserRouter>
                <Sidebar />
                <div className='container'>
@@ -31,12 +34,8 @@ function App() {
                      <Route path='/create'>
                         <CreateProject />
                      </Route>
-                     <Route path='/login'>
-                        <Login />
-                     </Route>
-                     <Route path='/signup'>
-                        <Signup />
-                     </Route>
+                     <Route path='/login'>{user ? <Redirect to='/' /> : <Login />}</Route>
+                     <Route path='/signup'>{user ? <Redirect to='/' /> : <Signup />}</Route>
                      <Route path='/projects/:id'>
                         <ProjectPage />
                      </Route>
@@ -47,8 +46,8 @@ function App() {
                   </Switch>
                </div>
             </BrowserRouter>
-         </div>
-      </AuthContextComponent>
+         )}
+      </div>
    );
 }
 

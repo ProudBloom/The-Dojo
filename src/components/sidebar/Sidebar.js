@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 //styles
 import './Sidebar.css';
@@ -9,13 +10,17 @@ import DashboardIcon from '../../assets/dashboard_icon.svg';
 import AddIcon from '../../assets/add_icon.svg';
 
 export default function Sidebar() {
+   const { user } = useAuthContext();
+   console.log(user);
+
    return (
       <div className='sidebar'>
          <div className='sidebar-content'>
             <div className='user'>
                {/* TODO: Avatar and username */}
-               <p>Hello user!</p>
+               {user ? <p>Hello {user.displayName}!</p> : <p>Welcome To Dojo!</p>}
             </div>
+
             <nav className='links'>
                <ul>
                   <li>
