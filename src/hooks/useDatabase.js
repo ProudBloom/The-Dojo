@@ -21,17 +21,17 @@ const databaseReducer = (state, action) => {
    }
 };
 
-const dispatchIfNotCancelled = (action) => {
-   if (!isCancelled) {
-      dispatch(action);
-   }
-};
-
 export const useDatabase = (collection) => {
    const [isCancelled, setIsCancelled] = useState(false);
    const [state, dispatch] = useReducer(databaseReducer, initialState);
 
    const collectionRef = firestoreDatabase.collection(collection);
+
+   const dispatchIfNotCancelled = (action) => {
+      if (!isCancelled) {
+         dispatch(action);
+      }
+   };
 
    const addDocument = async (document) => {
       dispatch({ type: 'IS_PENDING' });

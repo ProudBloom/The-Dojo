@@ -1,0 +1,8 @@
+.create-form {
+   margin: 0 auto;
+   max-width: 600px;
+}
+
+.create-form h2 {
+   text-transform: uppercase;
+}

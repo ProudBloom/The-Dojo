@@ -10,7 +10,6 @@ import './UsersSidebar.css';
 export default function UsersSidebar() {
    const { error, documents } = useCollection('users');
 
-   console.log(documents);
    return (
       <div className='user-list'>
          <h2>All Users</h2>
