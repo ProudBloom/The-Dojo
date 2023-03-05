@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDatabase } from '../../hooks/useDatabase';
 import { useCollection } from '../../hooks/useCollection';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 
 //styles
@@ -28,6 +29,8 @@ export default function CreateProject() {
    const { documents } = useCollection('users');
    const { user: currentUser } = useAuthContext();
 
+   const history = useHistory();
+
    useEffect(() => {
       if (documents) {
          const users = documents.map((usr) => {
@@ -35,9 +38,9 @@ export default function CreateProject() {
          });
          setUserList(users);
       }
-   }, [documents, state.isPending]);
+   }, [documents]);
 
-   const submitHandler = (e) => {
+   const submitHandler = async (e) => {
       setFormError(null);
       e.preventDefault();
 
@@ -73,13 +76,11 @@ export default function CreateProject() {
          assignedUsers: assignedUsersList,
       };
 
-      addDocument(project);
+      await addDocument(project);
 
-      setName('');
-      setCategory('');
-      setDetails('');
-      setDueDate('');
-      setAssignedUsers([]);
+      if (!state.error) {
+         history.push('/');
+      }
    };
 
    return (
