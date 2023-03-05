@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDatabase } from '../../hooks/useDatabase';
+import { useCollection } from '../../hooks/useCollection';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import Select from 'react-select';
 
 //styles
 import './CreateProject.css';
+import { timestamp } from '../../firebase/config';
 
 const categories = [
    { value: 'development', label: 'Development' },
@@ -13,16 +16,70 @@ const categories = [
 ];
 
 export default function CreateProject() {
-   const { addDocument, state } = useDatabase('projects');
-
+   const [formError, setFormError] = useState(null);
    const [name, setName] = useState('');
    const [details, setDetails] = useState('');
    const [dueDate, setDueDate] = useState('');
    const [category, setCategory] = useState('');
+   const [userList, setUserList] = useState([]);
    const [assignedUsers, setAssignedUsers] = useState([]);
 
+   const { addDocument, state } = useDatabase('projects');
+   const { documents } = useCollection('users');
+   const { user: currentUser } = useAuthContext();
+
+   useEffect(() => {
+      if (documents) {
+         const users = documents.map((usr) => {
+            return { value: usr, label: usr.displayName };
+         });
+         setUserList(users);
+      }
+   }, [documents, state.isPending]);
+
    const submitHandler = (e) => {
-      addDocument({ name, details, dueDate, category, assignedUsers });
+      setFormError(null);
+      e.preventDefault();
+
+      if (!category) {
+         setFormError('Please make sure to select the category');
+         return;
+      } else if (assignedUsers.length < 1) {
+         setFormError('Please make sure to select users assigned to a project');
+         return;
+      }
+
+      const createdBy = {
+         dispalyName: currentUser.displayName,
+         photoURL: currentUser.photoURL,
+         id: currentUser.uid,
+      };
+
+      const assignedUsersList = assignedUsers.map((usr) => {
+         return {
+            displayName: usr.value.displayName,
+            photoURL: usr.value.photoURL,
+            id: usr.value.id,
+         };
+      });
+
+      const project = {
+         name,
+         details,
+         dueDate: timestamp.fromDate(new Date(dueDate)),
+         category: category.value,
+         comments: [],
+         createdBy,
+         assignedUsers: assignedUsersList,
+      };
+
+      addDocument(project);
+
+      setName('');
+      setCategory('');
+      setDetails('');
+      setDueDate('');
+      setAssignedUsers([]);
    };
 
    return (
@@ -43,12 +100,14 @@ export default function CreateProject() {
             </label>
             <label>
                <span>Category: </span>
-               <Select options={categories} onChange={(option) => setCategory(option.value)} />
+               <Select options={categories} onChange={(option) => setCategory(option)} />
             </label>
             <label>
                <span>Assigned Users: </span>
+               <Select options={userList} onChange={(option) => setAssignedUsers(option)} isMulti />
             </label>
-            {state.error && <div className='erorr'>{state.error}</div>}
+            {formError && <p className='error'>{formError}</p>}
+            {state.error && <p className='error'>{state.error}</p>}
             {state.isPending ? <button className='btn'>Loading...</button> : <button className='btn'>Add a project</button>}
          </form>
       </div>

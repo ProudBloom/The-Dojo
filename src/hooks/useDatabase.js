@@ -39,6 +39,7 @@ export const useDatabase = (collection) => {
          const doc = await collectionRef.add(document);
          dispatchIfNotCancelled({ type: 'DOC_ADDED', payload: doc });
       } catch (error) {
+         console.log(error);
          dispatchIfNotCancelled({ type: 'ERROR', payload: error.message });
       }
    };

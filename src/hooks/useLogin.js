@@ -7,7 +7,7 @@ export const useLogin = () => {
    const [isPending, setIsPending] = useState(false);
    const [isCancelled, setIsCancelled] = useState(false);
 
-   const { user, dispatch } = useAuthContext();
+   const { dispatch } = useAuthContext();
 
    const login = async (email, password) => {
       if (!isCancelled) {
