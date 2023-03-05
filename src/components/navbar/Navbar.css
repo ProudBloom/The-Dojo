@@ -22,12 +22,13 @@
    letter-spacing: 1px;
    display: flex;
    align-items: center;
+   font-size: 1.5rem;
 }
 
 .navbar .logo img {
    margin-right: 10px;
    filter: invert(25%);
-   width: 36px;
+   width: 45px;
    margin-top: -8px;
 }
 

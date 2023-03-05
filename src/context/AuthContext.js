@@ -3,6 +3,11 @@ import { projectAuth } from '../firebase/config';
 
 export const AuthContext = createContext();
 
+const initialState = {
+   user: null,
+   isAuthReady: false,
+};
+
 const authReducer = (state, action) => {
    switch (action.type) {
       case 'LOGIN':
@@ -17,7 +22,7 @@ const authReducer = (state, action) => {
 };
 
 export const AuthContextComponent = ({ children }) => {
-   const [state, dispatch] = useReducer(authReducer, { user: null, isAuthReady: false });
+   const [state, dispatch] = useReducer(authReducer, initialState);
 
    useEffect(() => {
       const unsub = projectAuth.onAuthStateChanged((user) => {
@@ -25,8 +30,6 @@ export const AuthContextComponent = ({ children }) => {
          unsub();
       });
    }, []);
-
-   console.log(state);
 
    return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>;
 };
