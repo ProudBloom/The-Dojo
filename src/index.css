@@ -32,6 +32,21 @@ ul {
    list-style-type: none;
 }
 
+/* helpers */
+.mt-1 {
+   margin-top: 1rem;
+}
+
+.flex-center {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.flex-column {
+   flex-direction: column;
+}
+
 /* layout */
 .page-title {
    font-size: 1em;
@@ -48,6 +63,7 @@ ul {
    cursor: pointer;
    font-size: 1em;
    border: 1px solid var(--primary-color);
+   text-decoration: none;
 }
 
 .btn:hover {
