@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import CommentSection from '../../components/commentSection/CommentSection';
 import ProjectSummary from '../../components/projectSummary/ProjectSummary';
 import { useDocument } from '../../hooks/useDocument';
 
@@ -28,6 +29,7 @@ export default function ProjectPage() {
    return (
       <div className='project-details'>
          <ProjectSummary projectData={project} />
+         <CommentSection />
       </div>
    );
 }
