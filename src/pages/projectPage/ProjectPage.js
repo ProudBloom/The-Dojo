@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import ProjectSummary from '../../components/projectSummary/ProjectSummary';
 import { useDocument } from '../../hooks/useDocument';
 
 //styles
@@ -26,7 +27,7 @@ export default function ProjectPage() {
 
    return (
       <div className='project-details'>
-         <h1>{project.name}</h1>
+         <ProjectSummary projectData={project} />
       </div>
    );
 }

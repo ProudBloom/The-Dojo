@@ -9,9 +9,15 @@
    background-color: #fff;
    padding: 16px;
    border-radius: 6px;
-   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
    text-decoration: none;
    color: inherit;
+   border-bottom: 4px solid var(--primary-color);
+   transition: ease-in 0.2s;
+}
+
+.project-list a:hover {
+   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
 }
 
 .project-list h4 {
