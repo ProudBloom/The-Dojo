@@ -29,7 +29,7 @@ export default function ProjectPage() {
    return (
       <div className='project-details'>
          <ProjectSummary projectData={project} />
-         <CommentSection />
+         <CommentSection projectData={project} />
       </div>
    );
 }
