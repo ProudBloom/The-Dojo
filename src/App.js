@@ -34,7 +34,7 @@ function App() {
                      <Route path='/create'>{!user ? <Redirect to='/login' /> : <CreateProject />}</Route>
                      <Route path='/login'>{user ? <Redirect to='/' /> : <Login />}</Route>
                      <Route path='/signup'>{user ? <Redirect to='/' /> : <Signup />}</Route>
-                     <Route path='/projects/:id'>{!user ? <Redirect to='/login' /> : <ProjectPage />}</Route>
+                     <Route path='/projects/:projectID'>{!user ? <Redirect to='/login' /> : <ProjectPage />}</Route>
                      <Route path='/*'>
                         <Redirect to='/' />
                      </Route>

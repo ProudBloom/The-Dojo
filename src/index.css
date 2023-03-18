@@ -16,6 +16,7 @@ body {
    font-size: 1.1em;
    background: var(--bg-color);
 }
+
 ul,
 li,
 p,
@@ -26,8 +27,24 @@ h4 {
    margin: 0;
    padding: 0;
 }
+
 ul {
    list-style-type: none;
+}
+
+/* helpers */
+.mt-1 {
+   margin-top: 1rem;
+}
+
+.flex-center {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.flex-column {
+   flex-direction: column;
 }
 
 /* layout */
@@ -35,7 +52,9 @@ ul {
    font-size: 1em;
    color: var(--heading-color);
    display: inline-block;
+   text-transform: uppercase;
 }
+
 .btn {
    background: #fff;
    padding: 8px 12px;
@@ -44,7 +63,9 @@ ul {
    cursor: pointer;
    font-size: 1em;
    border: 1px solid var(--primary-color);
+   text-decoration: none;
 }
+
 .btn:hover {
    color: #fff;
    background-color: var(--primary-color);
@@ -55,10 +76,12 @@ label {
    display: block;
    margin: 24px auto;
 }
+
 label span {
    display: block;
    margin-bottom: 6px;
 }
+
 input,
 textarea {
    padding: 8px 6px;
@@ -69,9 +92,11 @@ textarea {
    border: 1px solid #ddd;
    border-radius: 4px;
 }
+
 textarea {
    min-height: 160px;
 }
+
 .error {
    color: #e23612;
    padding: 8px;

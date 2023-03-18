@@ -14,8 +14,12 @@ const databaseReducer = (state, action) => {
          return { isPending: true, error: null, success: false, addedDocument: null };
       case 'DOC_ADDED':
          return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
+      case 'DOC_UPDATED':
+         return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
+      case 'DOC_DELETED':
+         return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
       case 'ERROR':
-         return { isPending: false, erorr: action.payload, success: false, addedDocument: null };
+         return { isPending: false, erorr: null, success: true, addedDocument: null };
       default:
          return state;
    }
@@ -34,21 +38,42 @@ export const useDatabase = (collection) => {
    };
 
    const addDocument = async (document) => {
-      dispatch({ type: 'IS_PENDING' });
+      dispatchIfNotCancelled({ type: 'IS_PENDING' });
       try {
          const doc = await collectionRef.add({ ...document, createdAt: timestamp.fromDate(new Date()) });
          dispatchIfNotCancelled({ type: 'DOC_ADDED', payload: doc });
       } catch (error) {
-         console.log(error);
+         console.log(error.message);
          dispatchIfNotCancelled({ type: 'ERROR', payload: error.message });
       }
    };
 
-   const deleteDocument = () => {};
+   const updateDocument = async (documentID, updateData) => {
+      dispatchIfNotCancelled({ type: 'IS_PENDING' });
+      try {
+         const updatedDoc = await collectionRef.doc(documentID).update(updateData);
+         dispatchIfNotCancelled({ type: 'DOC_UPDATED', payload: updatedDoc });
+      } catch (error) {
+         console.log(error.message);
+         dispatchIfNotCancelled({ type: 'ERROR', payload: error.message });
+      }
+   };
+
+   const deleteDocument = async (id) => {
+      dispatch({ type: 'IS_PENDING' });
+
+      try {
+         await collectionRef.doc(id).delete();
+         dispatch({ type: 'DOC_DELETED' });
+      } catch (error) {
+         console.log(error.message);
+         dispatchIfNotCancelled({ type: 'ERROR', payload: error.message });
+      }
+   };
 
    useEffect(() => {
       return () => setIsCancelled(true);
    }, []);
 
-   return { addDocument, deleteDocument, state };
+   return { addDocument, deleteDocument, updateDocument, state };
 };
