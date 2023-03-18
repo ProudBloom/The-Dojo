@@ -16,8 +16,10 @@ const databaseReducer = (state, action) => {
          return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
       case 'DOC_UPDATED':
          return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
+      case 'DOC_DELETED':
+         return { isPending: false, erorr: null, success: true, addedDocument: action.payload };
       case 'ERROR':
-         return { isPending: false, erorr: action.payload, success: false, addedDocument: null };
+         return { isPending: false, erorr: null, success: true, addedDocument: null };
       default:
          return state;
    }
@@ -57,7 +59,17 @@ export const useDatabase = (collection) => {
       }
    };
 
-   const deleteDocument = () => {};
+   const deleteDocument = async (id) => {
+      dispatch({ type: 'IS_PENDING' });
+
+      try {
+         await collectionRef.doc(id).delete();
+         dispatch({ type: 'DOC_DELETED' });
+      } catch (error) {
+         console.log(error.message);
+         dispatchIfNotCancelled({ type: 'ERROR', payload: error.message });
+      }
+   };
 
    useEffect(() => {
       return () => setIsCancelled(true);

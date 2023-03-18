@@ -53,7 +53,7 @@ export default function CreateProject() {
       }
 
       const createdBy = {
-         dispalyName: currentUser.displayName,
+         displayName: currentUser.displayName,
          photoURL: currentUser.photoURL,
          id: currentUser.uid,
       };
