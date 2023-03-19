@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { timestamp } from '../../firebase/config';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useDatabase } from '../../hooks/useDatabase';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+
+//components
 import Avatar from '../avatar/Avatar';
 
 //styles
@@ -20,7 +23,6 @@ export default function CommentSection({ projectData }) {
          displayName: user.displayName,
          photoURL: user.photoURL,
          content: comment,
-
          createdAt: timestamp.fromDate(new Date()),
       };
 
@@ -44,7 +46,9 @@ export default function CommentSection({ projectData }) {
                         <Avatar imageSource={comment.photoURL} />
                         <p>{comment.displayName}</p>
                      </div>
-                     <div className='comment-date'>TODO: DATE</div>
+                     <div className='comment-date'>
+                        {formatDistanceToNow(comment.createdAt.toDate(), { addSuffix: true })}
+                     </div>
                      <div className='comments-content'>
                         <p>{comment.content}</p>
                      </div>
