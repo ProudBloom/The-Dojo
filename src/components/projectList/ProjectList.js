@@ -11,7 +11,9 @@ export default function ProjectList({ projects }) {
          {projects.length > 0 ? (
             projects.map((project) => (
                <Link to={`/projects/${project.id}`} key={project.id}>
-                  <h4>{project.name}</h4>
+                  <h4>
+                     {project.name} <i>({project.category})</i>
+                  </h4>
                   {/*Firebase timestamp can't be a virtual dom child*/}
                   <p>Due to {project.dueDate.toDate().toDateString()}</p>
                   <div className='assigned-to'>
